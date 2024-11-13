@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    <p>Order ID: {{order._id}}</p>
+    <p>Customer Name: {{order.customerName}}</p>
+    <p>Customer Address: {{order.customerAddress}}</p>
+    <p>Customer Phone: {{order.customerPhone}}</p>
+    <p>Status: {{order.paymentStatus}}</p>
+    
+    <h3>Items:</h3>
+    <ul>
+        {{#each order.items}}
+            <li>{{this.name}} - Quantity: {{this.quantity}} - Price: {{this.price}}</li>
+        {{/each}}
+    </ul>
+
+    {{#if order.receiptImage}}
+        <h3>Receipt Image:</h3>
+        <img src="{{order.receiptImage}}" alt="Receipt Image" style="max-width: 300px;"/>
+    {{/if}}
+
+    <form action="/admin/update-order-status/{{order._id}}" method="POST">
+        <button type="submit" name="status" value="Processing">Mark as Processing</button>
+        <button type="submit" name="status" value="Delivering">Mark as Delivering</button>
+    </form>
+
+    <a href="/admin/orders">Back to Orders</a>
+</body>
+</html>

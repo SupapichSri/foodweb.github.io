@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pending Orders</title>
+</head>
+<body>
+    <h1>Pending Orders</h1>
+    {{#each pendingOrders}}
+        <div class="order">
+            <p><strong>Order ID:</strong> {{_id}}</p>
+            <p><strong>Customer:</strong> {{customerName}}</p>
+            <p><strong>Total Amount:</strong> ${{totalAmount}}</p>
+            <p><strong>Payment Status:</strong> {{paymentStatus}}</p>
+            {{#if receiptImage}}
+                <p><strong>Receipt Image:</strong></p>
+                <img src="/{{receiptImage}}" alt="Receipt Image" width="200">
+            {{/if}}
+
+            <button onclick="updateOrderStatus('{{_id}}', 'Processing')">Mark as Processing</button>
+        </div>
+        <hr>
+    {{/each}}
+
+    <script>
+        async function updateOrderStatus(orderId, newStatus) {
+            try {
+                const response = await fetch(`/admin/update-order-status/${orderId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ newStatus })
+                });
+                const result = await response.text();
+                alert(result);
+                location.reload();
+            } catch (error) {
+                console.error('Error updating order status:', error);
+                alert('Failed to update order status');
+            }
+        }
+    </script>
+</body>
+</html>

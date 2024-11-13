@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="text-center">
+            <h1 class="display-4">Thank you for your order!</h1>
+            <p class="lead">Your order ID is <strong>{{orderId}}</strong>.</p>
+            <p>The total amount is <strong>${{totalAmount}}</strong>.</p>
+            <p>You will receive a confirmation email shortly with your order details.</p>
+            <a href="/" class="btn btn-primary mt-3">Back to Home</a>
+            <a href="/order-status" class="btn btn-secondary mt-3">View Order Status</a>
+        </div>
+    </div>
+</body>
+</html>

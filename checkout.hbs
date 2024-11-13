@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .checkout-items {
+            margin-bottom: 20px;
+        }
+        .checkout-item {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+        .checkout-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            margin-right: 15px;
+            border-radius: 5px;
+        }
+        .checkout-item-details p {
+            margin: 0;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #f57c00;
+            text-align: right;
+            margin-top: 10px;
+        }
+        h3 {
+            color: #f57c00;
+        }
+        .btn-primary, .checkout-btn {
+            background-color: #f57c00;
+            border-color: #f57c00;
+            color: white;
+        }
+        .btn-primary:hover, .checkout-btn:hover {
+            background-color: #d66900;
+            border-color: #d66900;
+        }
+        .form-group label {
+            font-weight: 600;
+        }
+        .form-check-label {
+            margin-left: 5px;
+        }
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+        #qrCodeImage {
+            display: none;
+            margin-top: 15px;
+            max-width: 100%;
+            max-height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Checkout</h1>
+        
+        <!-- Order Summary Section -->
+        <div class="checkout-items">
+            <h3>Order Summary</h3>
+            {{#each cartItems}}
+                <div class="checkout-item">
+                    <img src="{{this.image}}" alt="{{this.name}}" class="checkout-item-img">
+                    <div class="checkout-item-details">
+                        <p><strong>{{this.name}}</strong></p>
+                        <p>Price: ${{this.price}} x {{this.quantity}}</p>
+                        <p>Subtotal: ${{multiply this.price this.quantity}}</p>
+                    </div>
+                </div>
+            {{/each}}
+            <div class="total">
+                <p>Total: ${{calculateTotal cartItems}}</p>
+            </div>
+        </div>
+
+        <!-- Delivery Information Section -->
+        <form action="/submit-order" method="POST" enctype="multipart/form-data">
+            <h3>Delivery Information</h3>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="Your delivery address" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Your contact number" required>
+            </div>
+
+            <!-- Payment Method Section -->
+            <h3>Payment Method</h3>
+            {{!-- <div class="form-check">
+                <input type="radio" class="form-check-input" id="creditCard" name="paymentMethod" value="Credit Card" required>
+                <label for="creditCard" class="form-check-label">Credit Card</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="debitCard" name="paymentMethod" value="Debit Card">
+                <label for="debitCard" class="form-check-label">Debit Card</label>
+            </div> --}}
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="cashOnDelivery" name="paymentMethod" value="Cash on Delivery">
+                <label for="cashOnDelivery" class="form-check-label">Cash on Delivery</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" class="form-check-input" id="qrCode" name="paymentMethod" value="QR Code">
+                <label for="qrCode" class="form-check-label">QR Code</label>
+            </div>
+
+            <!-- QR Code Image -->
+            <img id="qrCodeImage" src="https://ih1.redbubble.net/image.1596511598.8886/fposter,small,wall_texture,square_product,600x600.jpg" alt="QR Code for Payment">
+
+            <!-- File upload for receipt image -->
+            <div class="form-group mt-3">
+                <label for="receiptImage">Upload Receipt (if QR Code selected):</label>
+                <input type="file" class="form-control" id="receiptImage" name="receiptImage" accept="image/*">
+            </div>
+
+            <!-- Checkout Button -->
+            <button type="submit" class="btn btn-primary checkout-btn">Confirm Order</button>
+        </form>
+    </div>
+
+    <script>
+        const qrCodeRadio = document.getElementById("qrCode");
+        const receiptImageInput = document.getElementById("receiptImage");
+        const qrCodeImage = document.getElementById("qrCodeImage");
+
+        // Show or hide the QR code and receipt upload field based on QR Code selection
+        qrCodeRadio.addEventListener("change", function() {
+            qrCodeImage.style.display = qrCodeRadio.checked ? "block" : "none";
+            receiptImageInput.style.display = qrCodeRadio.checked ? "block" : "none";
+        });
+
+        // Hide the receipt image field if QR Code is not selected
+        document.querySelectorAll("input[name='paymentMethod']").forEach(radio => {
+            radio.addEventListener("change", function() {
+                if (!qrCodeRadio.checked) {
+                    qrCodeImage.style.display = "none";
+                    receiptImageInput.style.display = "none";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="cover">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 d-flex align-items-center">
+                    <p class="mb-0 phone pl-md-2">
+                        <a href="#" class="mr-2">
+                            <i class="fas fa-phone mr-1"></i>
+                            +66 61 0123 456
+                        </a>
+                        <a href="#"><i class="fas fa-paper-plane mr-1"></i>email@email.com</a>
+                    </p>
+                </div>
+                <div class="col-md-6 d-flex justify-content-md-end">
+                    <div class="social-icon mr-4">
+                        <p class="mb-0 d-flex">
+                            <a href="#" class="d-flex align-items-center justify-content-center"><i class="fab fa-facebook"></i></a>
+                            <a href="#" class="d-flex align-items-center justify-content-center"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="d-flex align-items-center justify-content-center"><i class="fab fa-twitter"></i></a>
+                        </p>
+                    </div>
+                    <div class="reg">
+                        {{#if userId}}
+                            <span class="mr-3">Welcome, {{username}}</span>
+                            <a href="/logout" class="mr-2 mb-0">Log Out</a>
+                            <!-- Show the Admin Interface link only if the user is an admin -->
+                            {{#if isAdmin}}
+                                <a href="/admin/pending-orders">Go to Admin Interface</a>
+                            {{/if}}
+                            <!-- Added the order status link here -->
+                            <a href="/order-status" class="btn btn-secondary">Check Your Order Status</a>
+                        {{else}}
+                            <a href="/register" class="mr-2 mb-0">Sign-Up</a>
+                            <a href="/login">Log In</a>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav>
+        <div class="container">
+            <div class="nav-con">
+                <div class="logo">
+                    <ul class="logo-item">
+                        <li><img src="/imgs/White Black Minimalist Illustration Kitchen and Restaurant Food Catering Logo.png" alt=""></li>
+                        <li><a href="/">Food Ordering</a></li>
+                    </ul>
+                </div>
+                <ul class="menu">
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#" id="cartIcon" onclick="showCartItems()"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+        
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-con">
+                <div class="hero-info">
+                    <h3>Welcome to our shop</h3>
+                    <p>Discover a delicious array of authentic dishes made with fresh ingredients. From traditional classics to modern twists, we serve meals that satisfy every craving.</p>
+                    {{!-- <a href="#" class="hero-btn">learn more</a> --}}
+                </div>
+                <div class="hero-img">
+                    <img src="https://www.shutterstock.com/image-photo/table-scene-variety-delicious-foods-600nw-2274282793.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog">
+        <div class="container">
+            <div class="blog-title">
+                <h3>Our Menu</h3>
+            </div>
+            <div class="blog-con">
+                {{#each menuItems}}
+                    <div class="blog-item">
+                        <img src="{{this.image}}" alt="{{this.name}}" class="menu-item-img">
+                        <h4>{{this.name}}</h4>
+                        <p>{{this.description}}</p>
+                        <p>Price: ${{this.price}}</p>
+                        <button class="blog-btn" onclick="openCartModal('{{this._id}}', '{{this.name}}', '{{this.price}}', {{json this.options}})">Add to Cart</button>
+                    </div>
+                {{else}}
+                    <p>No menu items available.</p>
+                {{/each}}
+            </div>    
+        </div>
+    </section>
+
+    <!-- Modal for adding items to cart with customization options -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCartModal()">&times;</span>
+            <h3 id="modalItemName"></h3>
+            <p id="modalItemPrice"></p>
+            <div id="modalOptionsContainer"></div>
+            <button onclick="addToCart()">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Cart Items Modal for viewing items in cart -->
+    <div id="cartItemsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCartItemsModal()">&times;</span>
+            <h3>Your Cart</h3>
+            <div id="cartItemsContainer"></div>
+            <button onclick="closeCartItemsModal()">Close</button>
+            <button onclick="goToCheckout()" class="checkout-btn">Checkout</button>
+        </div>
+    </div>
+
+    <div class="footer-top">
+        <div class="container">
+            <div class="footer-top-con">
+                <div class="footer-top-item">
+                    <h4>latest items</h4>
+                    <div class="footer-top-item-con">
+                        <div class="date">November <br>13</div>
+                        <div class="info">
+                            <span class="info-title">Lorem ipsum dolor sit amet.</span>
+                            <span class="info-desc">Lorem ipsum dolor sit amet consectetur.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-top-item">
+                    <h4>quick links</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Policy</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-top-item">
+                    <h4>find us</h4>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <a href="#">Read more</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCartModal(itemId, itemName, itemPrice, options = []) {
+            document.getElementById("cartModal").style.display = "block";
+            document.getElementById("modalItemName").innerText = `${itemName}`;
+            document.getElementById("modalItemPrice").innerText = `Price: $${itemPrice}`;
+            document.getElementById("cartModal").dataset.itemId = itemId;
+
+            const optionsContainer = document.getElementById("modalOptionsContainer");
+            optionsContainer.innerHTML = '';
+            if (options.length > 0) {
+                optionsContainer.innerHTML = '<h4>Choose Cooking Options:</h4>';
+                options.forEach(option => {
+                    optionsContainer.innerHTML += `
+                        <label>
+                            <input type="checkbox" name="options" value="${option}"> ${option}
+                        </label><br>
+                    `;
+                });
+            }
+        }
+
+        function closeCartModal() {
+            document.getElementById("cartModal").style.display = "none";
+        }
+
+        function addToCart() {
+            const itemId = document.getElementById("cartModal").dataset.itemId;
+            const selectedOptions = Array.from(document.querySelectorAll('#modalOptionsContainer input[name="options"]:checked'))
+                .map(checkbox => checkbox.value);
+
+            fetch('/add-to-cart', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ itemId, quantity: 1, options: selectedOptions })
+            })
+            .then(response => response.text())
+            .then(message => {
+                alert(message);
+                closeCartModal();
+            })
+            .catch(error => console.error('Error adding to cart:', error));
+        }
+
+        function showCartItems() {
+            fetch('/cart')
+                .then(response => response.json())
+                .then(cartItems => {
+                    const cartItemsContainer = document.getElementById("cartItemsContainer");
+                    cartItemsContainer.innerHTML = '';
+
+                    if (cartItems.length === 0) {
+                        cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+                    } else {
+                        cartItems.forEach(item => {
+                            cartItemsContainer.innerHTML += `
+                                <div>
+                                    <p>${item.name} - $${item.price} 
+                                    <input type="number" value="${item.quantity}" min="1" onchange="updateCart('${item._id}', this.value)"/> 
+                                    <button onclick="removeFromCart('${item._id}')">Remove</button></p>
+                                </div>`;
+                        });
+                    }
+
+                    document.getElementById("cartItemsModal").style.display = "block";
+                })
+                .catch(error => console.error('Error fetching cart items:', error));
+        }
+
+        function closeCartItemsModal() {
+            document.getElementById("cartItemsModal").style.display = "none";
+        }
+
+        function goToCheckout() {
+            window.location.href = '/checkout';
+        }
+
+        function updateCart(itemId, quantity) {
+            fetch('/update-cart', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ itemId, quantity })
+            })
+            .then(response => response.text())
+            .then(message => {
+                alert(message);
+                showCartItems();
+            })
+            .catch(error => console.error('Error updating cart:', error));
+        }
+
+        function removeFromCart(itemId) {
+            fetch('/remove-from-cart', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ itemId })
+            })
+            .then(response => response.text())
+            .then(message => {
+                alert(message);
+                showCartItems();
+            })
+            .catch(error => console.error('Error removing from cart:', error));
+        }
+
+        window.onclick = function(event) {
+            const cartModal = document.getElementById("cartModal");
+            const cartItemsModal = document.getElementById("cartItemsModal");
+            if (event.target == cartModal) {
+                cartModal.style.display = "none";
+            } else if (event.target == cartItemsModal) {
+                cartItemsModal.style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>

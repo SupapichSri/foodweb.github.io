@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Orders</h1>
+        
+        <!-- Existing Manage Orders Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer Name</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each orders}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td>{{this.customerName}}</td>
+                    <td>${{this.totalAmount}}</td>
+                    <td>{{this.paymentStatus}}</td>
+                    <td>
+                        {{#if (eq this.paymentStatus "Pending")}}
+                        <form action="/admin/update-order-status/{{this._id}}" method="POST" style="display:inline;">
+                            <input type="hidden" name="status" value="Processing">
+                            <button type="submit" class="btn btn-warning">Process Order</button>
+                        </form>
+                        {{/if}}
+                        {{#if (eq this.paymentStatus "Processing")}}
+                        <form action="/admin/update-order-status/{{this._id}}" method="POST" style="display:inline;">
+                            <input type="hidden" name="status" value="Delivering">
+                            <button type="submit" class="btn btn-info">Deliver Order</button>
+                        </form>
+                        {{/if}}
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+
+        <!-- New Order Status Section -->
+        <h2>All Orders Status</h2>
+        <ul>
+            {{#each orders}}
+                <li>
+                    Order ID: {{this._id}}, Status: {{this.paymentStatus}} 
+                    <a href="/admin/orders/{{this._id}}">View Details</a>
+                </li>
+            {{else}}
+                <li>No orders found.</li>
+            {{/each}}
+        </ul>
+
+        <a href="/admin/dashboard" class="btn btn-primary">Back to Dashboard</a>
+        <a href="/logout" class="btn btn-danger">Logout</a>
+    </div>
+</body>
+</html>

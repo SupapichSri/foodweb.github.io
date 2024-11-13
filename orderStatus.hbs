@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Order Status</title>
+    <link rel="stylesheet" href="/path/to/your/style.css"> <!-- Link to your main CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">{{title}}</h1>
+        
+        <!-- Order List Section -->
+        <div class="order-list-section">
+            <ul class="order-list">
+                {{#each orders}}
+                    <li class="order-item">
+                        <div class="order-info">
+                            <span><strong>Order ID:</strong> {{this._id}}</span><br>
+                            <span><strong>Status:</strong> {{this.paymentStatus}}</span>
+                        </div>
+                        {{!-- <a href="/order-status/{{this._id}}" class="btn btn-secondary">View Details</a> --}}
+                    </li>
+                {{else}}
+                    <li class="no-orders">No orders found.</li>
+                {{/each}}
+            </ul>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="button-container">
+            <a href="/" class="btn btn-orange">Back to Home</a>
+            <a href="/logout" class="btn btn-secondary">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

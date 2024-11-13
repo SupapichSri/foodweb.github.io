@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #007bff;
+        }
+        .order-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+        }
+        .order-id, .order-status {
+            font-weight: bold;
+        }
+        .receipt-image {
+            max-width: 200px;
+            max-height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .action-buttons {
+            margin-top: 10px;
+        }
+        .action-buttons button {
+            margin-right: 10px;
+        }
+        .btn-view {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-view:hover {
+            text-decoration: underline;
+        }
+        .dashboard-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .dashboard-links a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .dashboard-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{username}}!</h1>
+        <h2>Admin Dashboard</h2>
+
+        <h3>Pending Orders:</h3>
+        {{#each orders}}
+            {{#if (eq this.paymentStatus 'Pending')}}
+                <div class="order-item">
+                    <p class="order-id">Order ID: {{this._id}}</p>
+                    <p class="order-status">Status: <span class="text-info">{{this.paymentStatus}}</span></p>
+
+                    {{#if this.receiptImage}}
+                        <div>
+                            <h4>Receipt Image:</h4>
+                            <img src="/{{this.receiptImage}}" alt="Receipt" class="receipt-image"/>
+                        </div>
+                    {{/if}}
+
+                    <a href="/admin/orders/{{this._id}}" class="btn-view">View Details</a>
+
+                    <div class="action-buttons">
+                        <form method="POST" action="/admin/update-order-status/{{this._id}}" class="d-inline">
+                            <button type="submit" name="status" value="Processing" class="btn btn-warning btn-sm">Mark as Processing</button>
+                        </form>
+                    </div>
+                </div>
+            {{/if}}
+        {{/each}}
+
+        <h3>Processing Orders:</h3>
+        {{#each orders}}
+            {{#if (eq this.paymentStatus 'Processing')}}
+                <div class="order-item">
+                    <p class="order-id">Order ID: {{this._id}}</p>
+                    <p class="order-status">Status: <span class="text-warning">{{this.paymentStatus}}</span></p>
+
+                    {{#if this.receiptImage}}
+                        <div>
+                            <h4>Receipt Image:</h4>
+                            <img src="/{{this.receiptImage}}" alt="Receipt" class="receipt-image"/>
+                        </div>
+                    {{/if}}
+
+                    <a href="/admin/orders/{{this._id}}" class="btn-view">View Details</a>
+
+                    <div class="action-buttons">
+                        <form method="POST" action="/admin/update-order-status/{{this._id}}" class="d-inline">
+                            <button type="submit" name="status" value="Delivering" class="btn btn-success btn-sm">Mark as Delivering</button>
+                        </form>
+                    </div>
+                </div>
+            {{/if}}
+        {{/each}}
+
+        <h3>Delivering Orders:</h3>
+        {{#each orders}}
+            {{#if (eq this.paymentStatus 'Delivering')}}
+                <div class="order-item">
+                    <p class="order-id">Order ID: {{this._id}}</p>
+                    <p class="order-status">Status: <span class="text-success">{{this.paymentStatus}}</span></p>
+
+                    {{#if this.receiptImage}}
+                        <div>
+                            <h4>Receipt Image:</h4>
+                            <img src="/{{this.receiptImage}}" alt="Receipt" class="receipt-image"/>
+                        </div>
+                    {{/if}}
+
+                    <a href="/admin/orders/{{this._id}}" class="btn-view">View Details</a>
+                </div>
+            {{/if}}
+        {{/each}}
+
+        <div class="dashboard-links">
+            <a href="/admin/orders">Manage Orders</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

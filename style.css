@@ -1,0 +1,382 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,501;1,501&family=Quicksand:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,501;1,501&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&family=Quicksand:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Noto Sans", sans-serif;
+}
+
+.cover {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    background: #e79702;
+}
+
+.phone {
+    z-index: 1;
+    font-weight: 200;
+}
+
+.phone i {
+    color: #000;
+}
+
+.phone a {
+    display: inline-block;
+    color: #000;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.reg {
+    width: 50%;
+    text-align: right;
+}
+
+.reg a {
+    color: #000;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.social-icon {
+    display: inline-block;
+    width: 50%;
+}
+
+.social-icon p {
+    display: block;
+    width: 100%;
+}
+
+.social-icon p a {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.social-icon p a i {
+    font-size: 13px;
+    color: #000;
+}
+
+.social-icon p a:hover {
+    background: #f8aa02;
+    border-color: #f8aa02;
+}
+
+.social-icon p a:hover i {
+    color: #fff;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+nav {
+    width: 100%;
+    height: 70px; /* Set a fixed height for consistency */
+    padding: 0 2rem; /* Add left and right padding only */
+    background-color: #ffb555;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+}
+
+.nav-con {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo-item {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+.logo-item li {
+    margin: 0.5rem;
+}
+
+.logo-item img {
+    width: 50px; /* Adjusted logo size */
+    margin-right: 0.5rem;
+}
+
+.logo-item a {
+    font-size: 1.5rem;
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-family: "Playwrite GB S", cursive;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+.menu li {
+    margin: 0 1.5rem; /* Increased spacing for a better spread */
+}
+
+.menu a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-family: "Playwrite GB S", cursive;
+    font-weight: 500; /* Make text a bit bolder */
+}
+
+.hero {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+}
+
+.hero-con {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-info {
+    flex: 1;
+    padding: 2rem;
+    background-color: rgba(196, 196, 196, 0.253);
+    border-radius: 10px;
+    color: #000000;
+}
+
+.hero-info h3 {
+    margin-bottom: 1rem;
+}
+
+.hero-info p {
+    margin: 1rem;
+}
+
+.hero-info .hero-btn {
+    display: inline-block;
+    background-color: orange;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.hero-img {
+    flex: 1;
+}
+
+.hero-img img {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 15%;
+}
+
+.blog {
+    padding: 2rem 0; /* Added padding for the blog section */
+}
+
+.blog-title {
+    text-align: center; /* Centered the title */
+    margin: 2rem 0;
+}
+
+.blog-con {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid layout */
+    gap: 2rem; /* Added gap between items */
+}
+
+.menu-item-img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.blog-item {
+    background: #fff; /* Added background for blog item */
+    border: 1px solid #e0e0e0; /* Light border for distinction */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Ensures the border radius is effective */
+    text-align: center; /* Centering content in blog item */
+    padding: 1rem; /* Padding inside blog item */
+}
+
+.blog-item img {
+    width: 100%;
+    border-radius: 10px; /* Rounded corners for images */
+}
+
+.blog-item h4 {
+    margin-top: 1rem;
+}
+
+.blog-item p {
+    margin: 1rem 0;
+}
+
+.blog-item button {
+    display: inline-block;
+    color: #fff;
+    background-color: orange;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none; /* Remove default border */
+    cursor: pointer; /* Pointer on hover */
+}
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.footer-top {
+    margin-top: 2rem;
+    padding: 3rem;
+    background-color: #333;
+    color: #fff;
+}
+
+.footer-top-con {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem; /* Gap between columns */
+}
+
+.footer-top-item-con {
+    display: flex;
+    margin: 1rem 0;
+}
+
+.footer-top-item-con .date {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 0.5rem;
+    border-radius: 5px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.footer-top-item:nth-child(2) h4 {
+    margin-bottom: 1rem;
+}
+
+.footer-top-item:nth-child(3) h4 {
+    margin-bottom: 1rem;
+}
+
+.footer-bottom {
+    background-color: #f0f0f0;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* Added styles for menu items */
+.menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem; /* Space between items */
+    justify-content: center; /* Center items */
+}
+
+.menu-item {
+    border: 1px solid #e0e0e0; /* Light border */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Ensures the border radius is effective */
+    text-align: center; /* Centering content */
+    padding: 1rem; /* Padding inside menu item */
+    background-color: #fff; /* Background for menu item */
+}
+
+.menu-item img {
+    width: 100%; /* Makes image responsive */
+    height: auto; /* Maintains aspect ratio */
+    border-radius: 10px; /* Rounded corners for images */
+}
+
+.menu-item h2 {
+    margin: 1rem 0; /* Space above and below item name */
+}
+
+.menu-item p {
+    margin: 0.5rem 0; /* Space above and below description and price */
+}
+
+/* Custom styles for orange buttons on the login and register pages */
+.btn-orange {
+    background-color: orange;
+    border-color: orange;
+    color: white;
+    font-weight: bold;
+}
+.btn.btn-secondary {
+    background-color: orange;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 0.8em;
+    padding: 5px 10px;
+    margin: 0 10px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn.btn-secondary:hover {
+    background-color: #e79702;
+    color: #fff;
+}
+
+/* Optional styling for form containers on login and register pages */
+.container-form {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 2rem auto;
+}
